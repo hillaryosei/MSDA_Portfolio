@@ -1,7 +1,7 @@
 ## D206 Data Cleaning
 
 ## Course Summary
-This curse continues building proficiency in the data analytics life cycle with data preparation skills. This course addresses exploring, transforming, and imputing data as well as handling outliers. Learners write code to manipulate, structure, and clean data as well as to reduce features in data sets. This course has one PA.
+This course continues building proficiency in the data analytics life cycle with data preparation skills. This course addresses exploring, transforming, and imputing data as well as handling outliers. Learners write code to manipulate, structure, and clean data as well as to reduce features in data sets. This course has one PA.
 
 ## Course Objectives
 * **Predicting Obstacles in Data Analysis:** The graduate predicts potential obstacles in data analysis based on the quality of data provided.

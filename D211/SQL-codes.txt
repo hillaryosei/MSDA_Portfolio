@@ -1,0 +1,269 @@
+CREATE TABLE public.census_data
+(
+    "TractId" bigint NOT NULL,
+    "State" character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    "County" character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    "TotalPop" integer,
+    "Men" integer,
+    "Women" integer,
+    "Hispanic" double precision,
+    "White" double precision,
+    "Black" double precision,
+    "Native" double precision,
+    "Asian" double precision,
+    "Pacific" double precision,
+    "VotingAgeCitizen" integer,
+    "Income" double precision,
+    "IncomeErr" double precision,
+    "IncomePerCap" double precision,
+    "IncomePerCapErr" double precision,
+    "Poverty" double precision,
+    "ChildPoverty" double precision,
+    "Professional" double precision,
+    "Service" double precision,
+    "Office" double precision,
+    "Construction" double precision,
+    "Production" double precision,
+    "Drive" double precision,
+    "Carpool" double precision,
+    "Transit" double precision,
+    "Walk" double precision,
+    "OtherTransp" double precision,
+    "WorkAtHome" double precision,
+    "MeanCommute" double precision,
+    "Employed" integer,
+    "PrivateWork" double precision,
+    "PublicWork" double precision,
+    "SelfEmployed" double precision,
+    "FamilyWork" double precision,
+    "Unemployment" double precision
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.census_data
+    OWNER to postgres;
+
+
+ALTER TABLE census_data
+DROP COLUMN "TractId",
+DROP COLUMN "VotingAgeCitizen",
+DROP COLUMN "IncomeErr",
+DROP COLUMN "IncomePerCap",
+DROP COLUMN "IncomePerCapErr",
+DROP COLUMN "Men",
+DROP COLUMN "Women",
+DROP COLUMN "Hispanic",
+DROP COLUMN "White",
+DROP COLUMN "Black",
+DROP COLUMN "Native",
+DROP COLUMN "Asian",
+DROP COLUMN "Pacific";
+
+
+UPDATE census_data
+SET "County" = TRIM(REPLACE(REPLACE("County", ' County', ''), ' Municipio', ''));
+
+
+SELECT
+  COUNT(*) FILTER (WHERE "State" IS NULL) AS null_state,
+  COUNT(*) FILTER (WHERE "County" IS NULL) AS null_county,
+  COUNT(*) FILTER (WHERE "TotalPop" IS NULL) AS null_totalpop,
+  COUNT(*) FILTER (WHERE "Income" IS NULL) AS null_income,
+  COUNT(*) FILTER (WHERE "Poverty" IS NULL) AS null_poverty,
+  COUNT(*) FILTER (WHERE "ChildPoverty" IS NULL) AS null_childpoverty,
+  COUNT(*) FILTER (WHERE "Professional" IS NULL) AS null_professional,
+  COUNT(*) FILTER (WHERE "Service" IS NULL) AS null_service,
+  COUNT(*) FILTER (WHERE "Office" IS NULL) AS null_office,
+  COUNT(*) FILTER (WHERE "Construction" IS NULL) AS null_construction,
+  COUNT(*) FILTER (WHERE "Production" IS NULL) AS null_production,
+  COUNT(*) FILTER (WHERE "Drive" IS NULL) AS null_drive,
+  COUNT(*) FILTER (WHERE "Carpool" IS NULL) AS null_carpool,
+  COUNT(*) FILTER (WHERE "Transit" IS NULL) AS null_transit,
+  COUNT(*) FILTER (WHERE "Walk" IS NULL) AS null_walk,
+  COUNT(*) FILTER (WHERE "OtherTransp" IS NULL) AS null_othertransp,
+  COUNT(*) FILTER (WHERE "WorkAtHome" IS NULL) AS null_workathome,
+  COUNT(*) FILTER (WHERE "MeanCommute" IS NULL) AS null_meancommute,
+  COUNT(*) FILTER (WHERE "Employed" IS NULL) AS null_employed,
+  COUNT(*) FILTER (WHERE "PrivateWork" IS NULL) AS null_privatework,
+  COUNT(*) FILTER (WHERE "PublicWork" IS NULL) AS null_publicwork,
+  COUNT(*) FILTER (WHERE "SelfEmployed" IS NULL) AS null_selfemployed,
+  COUNT(*) FILTER (WHERE "FamilyWork" IS NULL) AS null_familywork,
+  COUNT(*) FILTER (WHERE "Unemployment" IS NULL) AS null_unemployment
+FROM census_data;
+
+
+-- Poverty
+UPDATE census_data
+SET "Poverty" = (SELECT AVG("Poverty") FROM census_data WHERE "Poverty" IS NOT NULL)
+WHERE "Poverty" IS NULL;
+
+-- ChildPoverty
+UPDATE census_data
+SET "ChildPoverty" = (SELECT AVG("ChildPoverty") FROM census_data WHERE "ChildPoverty" IS NOT NULL)
+WHERE "ChildPoverty" IS NULL;
+
+-- Professional
+UPDATE census_data
+SET "Professional" = (SELECT AVG("Professional") FROM census_data WHERE "Professional" IS NOT NULL)
+WHERE "Professional" IS NULL;
+
+-- Service
+UPDATE census_data
+SET "Service" = (SELECT AVG("Service") FROM census_data WHERE "Service" IS NOT NULL)
+WHERE "Service" IS NULL;
+
+-- Office
+UPDATE census_data
+SET "Office" = (SELECT AVG("Office") FROM census_data WHERE "Office" IS NOT NULL)
+WHERE "Office" IS NULL;
+
+-- Construction
+UPDATE census_data
+SET "Construction" = (SELECT AVG("Construction") FROM census_data WHERE "Construction" IS NOT NULL)
+WHERE "Construction" IS NULL;
+
+-- Production
+UPDATE census_data
+SET "Production" = (SELECT AVG("Production") FROM census_data WHERE "Production" IS NOT NULL)
+WHERE "Production" IS NULL;
+
+-- Drive
+UPDATE census_data
+SET "Drive" = (SELECT AVG("Drive") FROM census_data WHERE "Drive" IS NOT NULL)
+WHERE "Drive" IS NULL;
+
+-- Carpool
+UPDATE census_data
+SET "Carpool" = (SELECT AVG("Carpool") FROM census_data WHERE "Carpool" IS NOT NULL)
+WHERE "Carpool" IS NULL;
+
+-- Transit
+UPDATE census_data
+SET "Transit" = (SELECT AVG("Transit") FROM census_data WHERE "Transit" IS NOT NULL)
+WHERE "Transit" IS NULL;
+
+-- Walk
+UPDATE census_data
+SET "Walk" = (SELECT AVG("Walk") FROM census_data WHERE "Walk" IS NOT NULL)
+WHERE "Walk" IS NULL;
+
+-- OtherTransp
+UPDATE census_data
+SET "OtherTransp" = (SELECT AVG("OtherTransp") FROM census_data WHERE "OtherTransp" IS NOT NULL)
+WHERE "OtherTransp" IS NULL;
+
+-- WorkAtHome
+UPDATE census_data
+SET "WorkAtHome" = (SELECT AVG("WorkAtHome") FROM census_data WHERE "WorkAtHome" IS NOT NULL)
+WHERE "WorkAtHome" IS NULL;
+
+-- Employed
+UPDATE census_data
+SET "Employed" = (SELECT AVG("Employed") FROM census_data WHERE "Employed" IS NOT NULL)
+WHERE "Employed" IS NULL;
+
+-- PrivateWork
+UPDATE census_data
+SET "PrivateWork" = (SELECT AVG("PrivateWork") FROM census_data WHERE "PrivateWork" IS NOT NULL)
+WHERE "PrivateWork" IS NULL;
+
+-- PublicWork
+UPDATE census_data
+SET "PublicWork" = (SELECT AVG("PublicWork") FROM census_data WHERE "PublicWork" IS NOT NULL)
+WHERE "PublicWork" IS NULL;
+
+-- SelfEmployed
+UPDATE census_data
+SET "SelfEmployed" = (SELECT AVG("SelfEmployed") FROM census_data WHERE "SelfEmployed" IS NOT NULL)
+WHERE "SelfEmployed" IS NULL;
+
+-- FamilyWork
+UPDATE census_data
+SET "FamilyWork" = (SELECT AVG("FamilyWork") FROM census_data WHERE "FamilyWork" IS NOT NULL)
+WHERE "FamilyWork" IS NULL;
+
+
+UPDATE census_data
+SET "Income" = sub.median_value
+FROM (
+    SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY "Income") AS median_value
+    FROM census_data
+    WHERE "Income" IS NOT NULL
+) AS sub
+WHERE "Income" IS NULL;
+
+UPDATE census_data
+SET "MeanCommute" = sub.median_value
+FROM (
+    SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY "MeanCommute") AS median_value
+    FROM census_data
+    WHERE "MeanCommute" IS NOT NULL
+) AS sub
+WHERE "MeanCommute" IS NULL;
+
+UPDATE census_data
+SET "Unemployment" = sub.median_value
+FROM (
+    SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY "Unemployment") AS median_value
+    FROM census_data
+    WHERE "Unemployment" IS NOT NULL
+) AS sub
+WHERE "Unemployment" IS NULL;
+
+
+UPDATE census_data
+SET "State" = CASE
+    WHEN "State" = 'Alabama' THEN 'AL'
+    WHEN "State" = 'Alaska' THEN 'AK'
+    WHEN "State" = 'Arizona' THEN 'AZ'
+    WHEN "State" = 'Arkansas' THEN 'AR'
+    WHEN "State" = 'California' THEN 'CA'
+    WHEN "State" = 'Colorado' THEN 'CO'
+    WHEN "State" = 'Connecticut' THEN 'CT'
+    WHEN "State" = 'Delaware' THEN 'DE'
+    WHEN "State" = 'Florida' THEN 'FL'
+    WHEN "State" = 'Georgia' THEN 'GA'
+    WHEN "State" = 'Hawaii' THEN 'HI'
+    WHEN "State" = 'Idaho' THEN 'ID'
+    WHEN "State" = 'Illinois' THEN 'IL'
+    WHEN "State" = 'Indiana' THEN 'IN'
+    WHEN "State" = 'Iowa' THEN 'IA'
+    WHEN "State" = 'Kansas' THEN 'KS'
+    WHEN "State" = 'Kentucky' THEN 'KY'
+    WHEN "State" = 'Louisiana' THEN 'LA'
+    WHEN "State" = 'Maine' THEN 'ME'
+    WHEN "State" = 'Maryland' THEN 'MD'
+    WHEN "State" = 'Massachusetts' THEN 'MA'
+    WHEN "State" = 'Michigan' THEN 'MI'
+    WHEN "State" = 'Minnesota' THEN 'MN'
+    WHEN "State" = 'Mississippi' THEN 'MS'
+    WHEN "State" = 'Missouri' THEN 'MO'
+    WHEN "State" = 'Montana' THEN 'MT'
+    WHEN "State" = 'Nebraska' THEN 'NE'
+    WHEN "State" = 'Nevada' THEN 'NV'
+    WHEN "State" = 'New Hampshire' THEN 'NH'
+    WHEN "State" = 'New Jersey' THEN 'NJ'
+    WHEN "State" = 'New Mexico' THEN 'NM'
+    WHEN "State" = 'New York' THEN 'NY'
+    WHEN "State" = 'North Carolina' THEN 'NC'
+    WHEN "State" = 'North Dakota' THEN 'ND'
+    WHEN "State" = 'Ohio' THEN 'OH'
+    WHEN "State" = 'Oklahoma' THEN 'OK'
+    WHEN "State" = 'Oregon' THEN 'OR'
+    WHEN "State" = 'Pennsylvania' THEN 'PA'
+    WHEN "State" = 'Rhode Island' THEN 'RI'
+    WHEN "State" = 'South Carolina' THEN 'SC'
+    WHEN "State" = 'South Dakota' THEN 'SD'
+    WHEN "State" = 'Tennessee' THEN 'TN'
+    WHEN "State" = 'Texas' THEN 'TX'
+    WHEN "State" = 'Utah' THEN 'UT'
+    WHEN "State" = 'Vermont' THEN 'VT'
+    WHEN "State" = 'Virginia' THEN 'VA'
+    WHEN "State" = 'Washington' THEN 'WA'
+    WHEN "State" = 'West Virginia' THEN 'WV'
+    WHEN "State" = 'Wisconsin' THEN 'WI'
+    WHEN "State" = 'Wyoming' THEN 'WY'
+    WHEN "State" = 'Puerto Rico' THEN 'PR'
+    WHEN "State" = 'District of Columbia' THEN 'DC'
+END;

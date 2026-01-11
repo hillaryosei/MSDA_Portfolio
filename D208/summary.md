@@ -8,8 +8,7 @@ This course builds on initial data preparation, cleaning, and analysis, enabling
 * **Multiple Regression:** The graduate employs multiple regression algorithms with categorical and numerical predictors in describing phenomena.
 * **Regression Implications:** The graduate makes assertions based on regression modeling.
 
-## Practical Assessment Overview
-
+## Practical Assessments Overview
 ### Task 1
 This assignment requires the student to develop and answer a research question, using one of the two provided datasets (medical or churn) and multiple linear regression to answer this question. Students create an initial multiple regression model, and generate a reduced multiple regression model by selecting variables based on a statistical justification and a model evaluation metric. Students also generate a number of univariate and bivariate visualizations of variables within the dataset.
 

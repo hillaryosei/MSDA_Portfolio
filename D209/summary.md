@@ -8,6 +8,7 @@ This course expands predictive modeling into nonlinear dimensions, enhancing the
 *  **Predictive Data Mining Models:** The graduate implements prediction data mining models to find hard-to-spot relationships among variables.
 *  **Data Mining Model Performance:** The graduate evaluates data mining model performance for precision, accuracy, and model comparison.
 
+## Practical Assessments Overview
 ### Task 1
 This project requires the student to develop and answer a research question, using one of the two provided datasets (medical or churn) and k-nearest neighbor (KNN) or Naive Bayes classification analysis. Students identify a set of variables to use and split the data into training and test sets before performing their classification analysis to answer this research question.
 
